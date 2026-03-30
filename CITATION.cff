@@ -1,0 +1,21 @@
+cff-version: 1.2.0
+message: "If you use OperatorEstimates in research, please cite it using this metadata."
+title: "OperatorEstimates"
+type: software
+authors:
+  - name: "EmetLabsReal"
+repository-code: "https://github.com/EmetLabsReal/operator-estimates"
+url: "https://github.com/EmetLabsReal/operator-estimates"
+version: "1.0.0"
+date-released: 2026-03-27
+license: "MIT"
+abstract: >-
+  Lean 4 admissibility-obstruction calculus for effective operators
+  governed by chi = (lambda/gamma)^2.
+keywords:
+  - Lean 4
+  - formal methods
+  - operator theory
+  - effective operators
+  - sector decompositions
+  - multiscale reduction

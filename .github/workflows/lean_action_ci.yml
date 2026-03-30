@@ -1,0 +1,35 @@
+name: Lean Action CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+    steps:
+      - uses: actions/checkout@v5
+      - uses: leanprover/lean-action@v1
+      - name: Build default target
+        run: lake build
+      - name: Build all OperatorEstimates modules
+        shell: bash
+        run: |
+          set -euo pipefail
+          while IFS= read -r file; do
+            mod="${file%.lean}"
+            mod="${mod//\//.}"
+            echo "Building $mod"
+            lake build "$mod"
+          done < <(find OperatorEstimates -name '*.lean' | sort)
+      - name: No sorry
+        shell: bash
+        run: |
+          if rg -n --glob '*.lean' '\b(sorry|admit)\b' OperatorEstimates OperatorEstimates.lean; then
+            echo "found sorry/admit"
+            exit 1
+          fi
